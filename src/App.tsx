@@ -3,11 +3,10 @@ import heroImg from './assets/hero.png'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import './App.css'
+import SoundCheck from './dev/SoundCheck'
 
-function App() {
-  const [count, setCount] = useState(0)
 
-  return (
+export default function App(){
     <>
       <section id="center">
         <div className="hero">
@@ -24,9 +23,7 @@ function App() {
         <button
           type="button"
           className="counter"
-          onClick={() => setCount((count) => count + 1)}
         >
-          Count is {count}
         </button>
       </section>
 
@@ -116,7 +113,6 @@ function App() {
       <div className="ticks"></div>
       <section id="spacer"></section>
     </>
-  )
+    return <SoundCheck/>
 }
 
-export default App
