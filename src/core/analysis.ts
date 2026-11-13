@@ -12,7 +12,8 @@ import type {
   ExtremeCell,
   FrameFeatures,
 } from '../types/frame';
-import type { CropRect, GridDims, LegendEntry, Track } from '../types/track';
+import type { MappingProfile } from '../types/sound';
+import type { CropRect, GridDims, HueDecode, LegendEntry, Track } from '../types/track';
 
 /** Default fine analysis grid (PROJECT_PLAN §9). */
 export const DEFAULT_ANALYSIS_GRID: GridDims = { cols: 36, rows: 18 };
@@ -77,6 +78,114 @@ export function decodePixel(
   return (best.valueMin + best.valueMax) / 2;
 }
 
+/** A legend colour reduced to its hue (degrees 0–360) and the value it stands for. */
+export interface PreparedHueEntry {
+  readonly hue: number;
+  readonly value: number;
+}
+
+/**
+ * rgbToHsv
+ * Formula:     standard HSV: v = max/255; s = (max − min)/max; hue in degrees from the dominant channel.
+ * Units:       RGB 0–255 in; hue 0–360 (0 when the colour is grey), s and v 0–1 out.
+ * Source:      docs/ASSUMPTIONS.md #16.
+ */
+export function rgbToHsv(r: number, g: number, b: number): { h: number; s: number; v: number } {
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const d = max - min;
+  const v = max / 255;
+  const s = max === 0 ? 0 : d / max;
+  if (d === 0) {
+    return { h: 0, s, v };
+  }
+  let h: number;
+  if (max === r) {
+    h = ((g - b) / d) % 6;
+  } else if (max === g) {
+    h = (b - r) / d + 2;
+  } else {
+    h = (r - g) / d + 4;
+  }
+  h *= 60;
+  if (h < 0) {
+    h += 360;
+  }
+  return { h, s, v };
+}
+
+/**
+ * prepareHueLegend
+ * Purpose:     reduce each legend colour to its hue once per frame, so per-pixel decoding stays cheap.
+ * Throws:      RangeError when a legend colour is grey (no hue) — a programmer/data error.
+ * Source:      docs/ASSUMPTIONS.md #16.
+ */
+export function prepareHueLegend(legend: readonly LegendEntry[]): readonly PreparedHueEntry[] {
+  return legend.map((entry, i) => {
+    const hsv = rgbToHsv(entry.rgb[0], entry.rgb[1], entry.rgb[2]);
+    if (hsv.s === 0) {
+      throw new RangeError(`Legend entry ${i} is grey and has no hue; it cannot be used with hueDecode.`);
+    }
+    return { hue: hsv.h, value: (entry.valueMin + entry.valueMax) / 2 };
+  });
+}
+
+/**
+ * decodePixelByHue
+ * Formula:     alpha < ALPHA_THRESHOLD, saturation < minSaturation or brightness < minValue → no data;
+ *              otherwise the legend entry with the smallest circular hue distance (ties → lowest index);
+ *              farther than maxHueDistanceDeg → no data; value = (valueMin + valueMax) / 2 of that entry.
+ * Units:       RGBA bytes in; track value units out.
+ * Assumptions: the legend colours have distinct hues; the pixel's brightness carries no data (it is a
+ *              rendering effect of the visualization) and is IGNORED apart from the minValue gate.
+ * Source:      docs/ASSUMPTIONS.md #16, PROJECT_PLAN §9.
+ * EDUCATIONAL APPROXIMATION — not an engineering-grade calculation.
+ */
+export function decodePixelByHue(
+  r: number,
+  g: number,
+  b: number,
+  a: number,
+  prepared: readonly PreparedHueEntry[],
+  hue: HueDecode,
+): number | null {
+  if (a < ALPHA_THRESHOLD) {
+    return null;
+  }
+  const hsv = rgbToHsv(r, g, b);
+  if (hsv.s < hue.minSaturation || hsv.v < hue.minValue) {
+    return null;
+  }
+  let bestIndex = -1;
+  let bestDist = Number.POSITIVE_INFINITY;
+  for (let i = 0; i < prepared.length; i += 1) {
+    const entry = prepared[i];
+    if (entry === undefined) {
+      continue;
+    }
+    const raw = Math.abs(hsv.h - entry.hue);
+    const dist = Math.min(raw, 360 - raw);
+    if (dist < bestDist) {
+      bestDist = dist;
+      bestIndex = i;
+    }
+  }
+  const best = bestIndex >= 0 ? prepared[bestIndex] : undefined;
+  if (best === undefined || bestDist > hue.maxHueDistanceDeg) {
+    return null;
+  }
+  return best.value;
+}
+
+/**
+ * noDataThresholdFor
+ * Rule:        the track's own `noDataThreshold` when it declares one, otherwise the profile's (D7: 0.5).
+ * Source:      docs/ASSUMPTIONS.md #17.
+ */
+export function noDataThresholdFor(track: Track, profile: MappingProfile): number {
+  return track.noDataThreshold ?? profile.noDataThreshold;
+}
+
 function clampCrop(crop: CropRect | undefined, frame: DecodedFrame): CropRect {
   if (crop === undefined) {
     return { x: 0, y: 0, width: frame.width, height: frame.height };
@@ -117,7 +226,13 @@ export function analyzeFrame(
   if (track.valueBasis === 'decoded-legend' && (track.legend === undefined || track.legend.length === 0)) {
     throw new Error(`Track ${track.id} is 'decoded-legend' but has no legend.`);
   }
+  if (track.hueDecode !== undefined && track.valueBasis !== 'decoded-legend') {
+    throw new Error(`Track ${track.id} sets hueDecode but its valueBasis is not 'decoded-legend'.`);
+  }
   const legend = track.valueBasis === 'decoded-legend' ? track.legend : undefined;
+  const hueDecode = track.hueDecode;
+  const preparedHue =
+    hueDecode !== undefined && legend !== undefined ? prepareHueLegend(legend) : undefined;
   const crop = clampCrop(track.cropRect, frame);
   const { cols, rows } = dims;
 
@@ -133,13 +248,14 @@ export function analyzeFrame(
       for (let y = ys.start; y < ys.end; y += 1) {
         for (let x = xs.start; x < xs.end; x += 1) {
           const p = ((crop.y + y) * frame.width + (crop.x + x)) * 4;
-          const v = decodePixel(
-            frame.rgba[p] ?? 0,
-            frame.rgba[p + 1] ?? 0,
-            frame.rgba[p + 2] ?? 0,
-            frame.rgba[p + 3] ?? 0,
-            legend,
-          );
+          const pr = frame.rgba[p] ?? 0;
+          const pg = frame.rgba[p + 1] ?? 0;
+          const pb = frame.rgba[p + 2] ?? 0;
+          const pa = frame.rgba[p + 3] ?? 0;
+          const v =
+            hueDecode !== undefined && preparedHue !== undefined
+              ? decodePixelByHue(pr, pg, pb, pa, preparedHue, hueDecode)
+              : decodePixel(pr, pg, pb, pa, legend);
           if (v !== null) {
             sum += v;
             valid += 1;

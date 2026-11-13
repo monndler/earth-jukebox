@@ -18,6 +18,20 @@ export interface LegendEntry {
   readonly valueMax: number;
 }
 
+/**
+ * Hue-based legend decoding (docs/ASSUMPTIONS.md #16). Used when a frame draws the legend colours with
+ * varying brightness (e.g. streamlines on black), so exact RGB matching fails. A pixel is decoded to the
+ * legend colour with the nearest HUE; its brightness is ignored, but very dark or grey pixels are no data.
+ */
+export interface HueDecode {
+  /** Maximum circular hue distance (degrees, 0–180) between a pixel and its nearest legend colour. */
+  readonly maxHueDistanceDeg: number;
+  /** Minimum HSV saturation (0–1); less saturated pixels (grey land, white) are no data. */
+  readonly minSaturation: number;
+  /** Minimum HSV value/brightness (0–1); darker pixels (background) are no data. */
+  readonly minValue: number;
+}
+
 export interface CropRect {
   readonly x: number;
   readonly y: number;
@@ -57,6 +71,17 @@ export interface Track {
   readonly source: TrackSource;
   readonly frames: readonly FrameRef[];
   readonly legend?: readonly LegendEntry[];
+  /**
+   * When present (only with `valueBasis: 'decoded-legend'`) the legend is matched by hue instead of by
+   * exact colour. Must be stated to the listener: brightness variations in the frame are ignored.
+   */
+  readonly hueDecode?: HueDecode;
+  /**
+   * Per-track override of the profile's `noDataThreshold` (docs/ASSUMPTIONS.md #17): an Explore cell is
+   * no-data when its valid fraction is below this (0–1). Needed when a frame legitimately covers only part
+   * of each cell with decodable pixels.
+   */
+  readonly noDataThreshold?: number;
   readonly cropRect?: CropRect;
   readonly projection?: { readonly type: string; readonly extent: string };
   /** True for anomaly-style data centred on a baseline (zero). */

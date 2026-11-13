@@ -3,14 +3,8 @@
  * Context + useReducer — no external dependency.
  * Settings persisted under jukebox:v1:settings (versioned, validated, try/catch).
  */
-import {
-  createContext,
-  useContext,
-  useReducer,
-  type Dispatch,
-  type ReactNode,
-} from 'react';
-import type { AnnouncementMode, Cursor } from '../types/frame';
+import { createContext, useContext, type Dispatch } from 'react';
+import type { AnnouncementMode, Cursor, Settings } from '../types/frame';
 
 /* ─── Types ─── */
 
@@ -50,6 +44,7 @@ export type Action =
   | { readonly type: 'SET_VIEW'; readonly view: AppView }
   | { readonly type: 'SELECT_TRACK'; readonly trackId: string }
   | { readonly type: 'SET_CURSOR'; readonly cursor: Cursor }
+  | { readonly type: 'SET_FRAME'; readonly frameIndex: number }
   | { readonly type: 'SET_PLAYBACK'; readonly playback: PlaybackStatus }
   | { readonly type: 'SET_SOUND_ENABLED'; readonly enabled: boolean }
   | { readonly type: 'SET_VOLUME'; readonly volume: number }
@@ -102,14 +97,14 @@ function loadPersistedSettings(): PersistedSettings {
   }
 }
 
-export function saveSettings(state: AppState): void {
+export function saveSettings(settings: Settings): void {
   try {
     const data: PersistedSettings = {
-      volume: state.volume,
-      speed: state.speed,
-      announcements: state.announcements,
-      invert: state.invert,
-      moveTones: state.moveTones,
+      volume: settings.volume,
+      speed: settings.speed,
+      announcements: settings.announcements,
+      invert: settings.invert,
+      moveTones: settings.moveTones,
     };
     localStorage.setItem(SETTINGS_KEY, JSON.stringify(data));
   } catch {
@@ -161,6 +156,8 @@ export function reducer(state: AppState, action: Action): AppState {
       };
     case 'SET_CURSOR':
       return { ...state, cursor: action.cursor };
+    case 'SET_FRAME':
+      return { ...state, frameIndex: Math.max(0, Math.floor(action.frameIndex)), playback: 'idle' };
     case 'SET_PLAYBACK':
       return { ...state, playback: action.playback };
     case 'SET_SOUND_ENABLED':
@@ -190,8 +187,8 @@ export function reducer(state: AppState, action: Action): AppState {
 
 /* ─── Context ─── */
 
-const StateContext = createContext<AppState | null>(null);
-const DispatchContext = createContext<Dispatch<Action> | null>(null);
+export const StateContext = createContext<AppState | null>(null);
+export const DispatchContext = createContext<Dispatch<Action> | null>(null);
 
 export function useAppState(): AppState {
   const ctx = useContext(StateContext);
@@ -203,21 +200,4 @@ export function useAppDispatch(): Dispatch<Action> {
   const ctx = useContext(DispatchContext);
   if (ctx === null) throw new Error('useAppDispatch must be used inside AppProvider');
   return ctx;
-}
-
-export function AppProvider({
-  defaultTrackId,
-  children,
-}: {
-  defaultTrackId: string;
-  children: ReactNode;
-}): ReactNode {
-  const [state, dispatch] = useReducer(reducer, defaultTrackId, createInitialState);
-  return (
-    <StateContext value={state}>
-      <DispatchContext value={dispatch}>
-        {children}
-      </DispatchContext>
-    </StateContext>
-  );
 }

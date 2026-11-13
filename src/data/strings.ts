@@ -27,6 +27,8 @@ export const strings = {
     title: 'Earth Jukebox — Audio Map',
   },
   header: {
+    announceOn: 'Sound on',
+    announceOff: 'Sound off',
     backLabel: 'Back to track list',
     soundOn: 'Sound: On',
     soundOff: 'Sound: Off',
@@ -46,11 +48,18 @@ export const strings = {
       'This is a visual translation — not calibrated data. The sound represents relative visual intensity, not measured values.',
   } as const,
   source: {
-    line: 'NASA EIC — {dataset} — {date}',
+    line: '{dataset} — {date}',
+  },
+
+  /* ─── Frame choice (PLACEHOLDER-LAYOUT: not in the supplied design) ─── */
+  frames: {
+    label: 'Frame',
+    showing: 'Showing frame {label}',
   },
 
   /* ─── Sections ─── */
   sections: {
+    navLabel: 'Sections',
     explore: 'Explore',
     guide: 'Sound guide',
     settings: 'Settings',
@@ -73,6 +82,10 @@ export const strings = {
     instruction: 'Touch a square or use sliders below',
     symbolsOn: 'Visual symbols on',
     cursorChip: 'Row {row}, Column {col}',
+    axisLeft: 'Left',
+    axisRight: 'Right',
+    axisUpper: 'Upper',
+    axisLower: 'Lower',
   },
 
   /* ─── Explore: Sliders ─── */
@@ -92,6 +105,8 @@ export const strings = {
     panPosition: 'Pan: {position}',
     timbre: 'Timbre: {timbre}',
     dataShareDetail: '{percent}% of cell area has data',
+    panWords: { left: 'left', center: 'center', right: 'right' },
+    cellHeading: 'Selected cell',
   },
 
   /* ─── Explore: Direction Pad & Jumps ─── */
@@ -126,6 +141,7 @@ export const strings = {
     sweepFinished: 'Sweep finished',
     stopAll: 'Stop all sound',
     allStopped: 'All sound stopped',
+    barLabel: 'Sound controls',
   },
 
   /* ─── Sound Guide ─── */
@@ -166,6 +182,7 @@ export const strings = {
   trackLibrary: {
     heading: 'Track Library',
     selectPrompt: 'Select a track to explore',
+    placeholderNote: 'Layout not yet designed.',
   },
 
   /* ─── States ─── */
@@ -176,6 +193,12 @@ export const strings = {
   },
   loading: {
     text: 'Loading frame…',
+  },
+  common: {
+    explore: 'Explore the map',
+    moveHeading: 'Move around the map',
+    summaryHeading: 'Audio overview',
+    settingsSection: 'Settings',
   },
   empty: {
     text: 'No tracks available.',

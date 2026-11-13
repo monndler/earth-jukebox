@@ -1,15 +1,16 @@
 /**
  * Track catalogue.
  *
- * The `tracks` array is the REAL catalogue (empty until 13 Nov resources arrive).
+ * The `tracks` array is the REAL catalogue (NASA-sourced tracks only).
  * `getAllTracks()` includes the synthetic demo track approved for Phase 4 development.
  * Remove the synthetic import before submission.
  */
 import type { Track } from '../types/track';
+import { oceanSymphonyTrack } from './oceanSymphony';
 import { syntheticDemoTrack } from './syntheticDemoTrack';
 
-/** Real tracks (PROJECT_PLAN §10, AGENTS.md §11). Empty until resources arrive. */
-export const tracks: readonly Track[] = [];
+/** Real tracks (PROJECT_PLAN §10, AGENTS.md §11). */
+export const tracks: readonly Track[] = [oceanSymphonyTrack];
 
 /**
  * All tracks including the dev-only synthetic demo (AGENTS.md §11.5).
