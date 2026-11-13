@@ -107,7 +107,7 @@ None of this has been checked with real assistive technology yet.
 | Area | State |
 |---|---|
 | Analysis, mapping, narration, audio engine, track data | Implemented. Unit tests pass in a temporary offline runner (107 tests). Run `npm test` to confirm. |
-| Explorer interface | Written. Typechecked only against a minimal stub of the React types. **Not yet built, linted, or run in a browser.** |
+| Explorer interface | Written. Typechecks with the real React types (`tsc -b` passed on the first Vercel build). **Not yet fully built, linted, or run in a browser.** |
 | Keyboard, screen-reader, zoom and contrast checks | Not run |
 | Listening tests with blind and low-vision volunteers | Not run. Mapping values and thresholds are initial design choices. |
 | Track Library, loading, error and empty screens | Placeholder layout. The designs are not supplied yet. |

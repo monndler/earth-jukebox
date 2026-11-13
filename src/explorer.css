@@ -1,0 +1,198 @@
+/*
+ * Explorer styles. Every colour, radius and spacing value comes from the tokens in theme.css (DESIGN.md + P1–P8).
+ * Text is at least 14 px (P5). Control boundaries use --ej-outline (P6). Cell meaning is carried by symbols (P4).
+ */
+
+.ej-page {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: var(--ej-space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ej-space-md);
+}
+
+.ej-header { display: flex; flex-direction: column; gap: var(--ej-space-sm); }
+.ej-header__row { display: flex; align-items: center; gap: var(--ej-space-sm); }
+.ej-header__title { flex: 1; font-size: 1.25rem; line-height: 1.75rem; font-weight: 600; letter-spacing: 0; }
+.ej-intro, .ej-helper { font-size: 0.875rem; line-height: 1.25rem; color: var(--ej-text-secondary); }
+
+.ej-panel {
+  background: var(--ej-panel);
+  border: 1px solid var(--ej-outline-variant);
+  border-radius: var(--ej-radius-lg);
+  padding: var(--ej-space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ej-space-sm);
+}
+main { display: flex; flex-direction: column; gap: var(--ej-space-md); }
+.ej-explore { display: flex; flex-direction: column; gap: var(--ej-space-md); }
+
+.ej-h3 { font-size: 1.125rem; line-height: 1.5rem; font-weight: 600; }
+.ej-h4 { font-size: 1rem; line-height: 1.5rem; font-weight: 600; margin-top: var(--ej-space-sm); }
+.ej-track-title { font-size: 1.5rem; line-height: 2rem; font-weight: 600; letter-spacing: -0.01em; }
+.ej-row { display: flex; align-items: center; justify-content: space-between; gap: var(--ej-space-sm); }
+.ej-stack { display: flex; flex-direction: column; gap: var(--ej-space-sm); }
+.ej-list { margin: 0; padding-left: 1.25rem; font-size: 0.875rem; line-height: 1.25rem; }
+.ej-summary, .ej-readout, .ej-source, .ej-notice { font-size: 1rem; line-height: 1.5rem; }
+.ej-source, .ej-notice { color: var(--ej-text-secondary); font-size: 0.875rem; line-height: 1.25rem; }
+
+.ej-badge, .ej-chip {
+  display: inline-block;
+  align-self: flex-start;
+  padding: var(--ej-space-xs) 0.625rem;
+  border-radius: 9999px;
+  border: 1px solid var(--ej-outline);
+  background: var(--ej-surface-low);
+  color: var(--ej-text);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+}
+
+/* — Buttons (P1, P2, P3) — */
+.ej-btn {
+  min-height: 2.75rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--ej-radius);
+  border: 1px solid transparent;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5rem;
+  cursor: pointer;
+}
+.ej-btn:active { transform: scale(0.98); }
+.ej-btn--primary { background: var(--ej-primary); color: var(--ej-on-primary); }
+.ej-btn--primary:hover { background: var(--ej-primary-hover); }
+.ej-btn--primary[aria-pressed='true'] { background: var(--ej-primary-hover); }
+.ej-btn--secondary { background: var(--ej-surface-low); color: var(--ej-text); border-color: var(--ej-outline); }
+.ej-btn--secondary:hover { background: var(--ej-surface); }
+.ej-btn--secondary[aria-pressed='true'] { background: var(--ej-surface-high); }
+.ej-btn--secondary[aria-disabled='true'] { color: var(--ej-text-secondary); border-style: dashed; }
+.ej-btn--stop { background: var(--ej-error); color: var(--ej-on-error); }
+.ej-btn--stop:hover { background: var(--ej-error-hover); }
+.ej-btn--icon { min-width: 2.75rem; padding: 0.5rem; background: var(--ej-surface-low); color: var(--ej-text); border-color: var(--ej-outline); }
+
+/* — Section navigation — */
+.ej-nav { display: grid; grid-template-columns: repeat(auto-fit, minmax(6rem, 1fr)); gap: var(--ej-space-sm); }
+.ej-nav__btn {
+  min-height: 2.75rem;
+  padding: 0.5rem;
+  border-radius: var(--ej-radius);
+  border: 1px solid var(--ej-outline);
+  background: var(--ej-panel);
+  color: var(--ej-text);
+  font-size: 1rem;
+  cursor: pointer;
+}
+.ej-nav__btn[aria-current='true'] { background: var(--ej-primary); color: var(--ej-on-primary); border-color: var(--ej-primary); font-weight: 600; }
+
+/* — Map grid — */
+.ej-grid-wrap { position: relative; display: flex; flex-direction: column; gap: var(--ej-space-xs); }
+.ej-grid {
+  display: grid;
+  gap: 2px;
+  border: 1px solid var(--ej-outline);
+  border-radius: var(--ej-radius);
+  background: var(--ej-outline);
+  overflow: hidden;
+  touch-action: none; /* dragging selects cells instead of scrolling */
+  user-select: none;
+}
+.ej-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2rem;
+  font-size: 0.875rem;
+  line-height: 1;
+}
+.ej-cell--high { background: var(--ej-tint-high-bg); color: var(--ej-tint-high-fg); }
+.ej-cell--middle { background: var(--ej-tint-mid-bg); color: var(--ej-tint-mid-fg); }
+.ej-cell--low { background: var(--ej-tint-low-bg); color: var(--ej-tint-low-fg); }
+.ej-cell--no-data { background: var(--ej-tint-nodata-bg); color: var(--ej-tint-nodata-fg); }
+.ej-cell--cursor { outline: 3px solid var(--ej-text); outline-offset: -3px; font-weight: 700; }
+.ej-axis { font-size: 0.875rem; line-height: 1.25rem; color: var(--ej-text-secondary); }
+.ej-axis-row { display: flex; justify-content: space-between; }
+.ej-axis--top, .ej-axis--bottom { display: none; }
+
+/* — Sliders, fields — */
+.ej-field { display: flex; flex-direction: column; gap: var(--ej-space-xs); border: 0; padding: 0; margin: 0; min-width: 0; }
+.ej-field__legend { font-size: 1rem; font-weight: 600; padding: 0; }
+input[type='range'] { width: 100%; min-height: 2.75rem; accent-color: var(--ej-primary); }
+
+.ej-segmented { display: flex; flex-wrap: wrap; gap: var(--ej-space-xs); }
+.ej-segmented__item { position: relative; flex: 1 1 auto; }
+.ej-segmented__item input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+.ej-segmented__item span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--ej-radius);
+  border: 1px solid var(--ej-outline);
+  background: var(--ej-panel);
+  font-size: 1rem;
+}
+.ej-segmented__item input:checked + span { background: var(--ej-primary); color: var(--ej-on-primary); border-color: var(--ej-primary); font-weight: 600; }
+.ej-segmented__item input:focus-visible + span { outline: var(--ej-focus-ring); outline-offset: var(--ej-focus-offset); }
+
+.ej-switch-row { display: flex; align-items: center; justify-content: space-between; gap: var(--ej-space-md); min-height: 2.75rem; }
+.ej-switch-row__label { font-size: 1rem; font-weight: 600; }
+.ej-switch {
+  position: relative;
+  flex: none;
+  width: 3.25rem;
+  height: 2rem;
+  border-radius: 9999px;
+  border: 1.5px solid var(--ej-outline);
+  background: var(--ej-panel);
+  cursor: pointer;
+  padding: 0;
+}
+.ej-switch__thumb { position: absolute; top: 0.2rem; left: 0.25rem; width: 1.35rem; height: 1.35rem; border-radius: 9999px; background: var(--ej-outline); transition: transform 0.15s; }
+.ej-switch[aria-checked='true'] { background: var(--ej-primary); border-color: var(--ej-primary); }
+.ej-switch[aria-checked='true'] .ej-switch__thumb { transform: translateX(1.2rem); background: var(--ej-on-primary); }
+
+/* — Details, direction pad, guide — */
+.ej-details summary { min-height: 2.75rem; display: flex; align-items: center; cursor: pointer; font-weight: 600; }
+.ej-dpad {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas: '. up .' 'left center right' '. down .';
+  gap: var(--ej-space-sm);
+  align-items: center;
+}
+.ej-dpad__up { grid-area: up; }
+.ej-dpad__left { grid-area: left; }
+.ej-dpad__right { grid-area: right; }
+.ej-dpad__down { grid-area: down; }
+.ej-dpad__center { grid-area: center; text-align: center; font-size: 0.875rem; font-weight: 600; }
+.ej-dpad .ej-btn { padding-inline: 0.25rem; font-size: 0.875rem; }
+.ej-guide { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--ej-space-md); }
+.ej-guide li { display: flex; flex-direction: column; gap: var(--ej-space-xs); }
+
+/* — Sticky bar (D10) — */
+.ej-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ej-space-sm);
+  padding: var(--ej-space-sm) var(--ej-space-md);
+  background: var(--ej-panel);
+  border-top: 1px solid var(--ej-outline);
+}
+.ej-bar .ej-btn { flex: 1 1 10rem; }
+.ej-bar--sticky { position: fixed; left: 0; right: 0; bottom: 0; z-index: 10; }
+
+.ej-alert {
+  padding: var(--ej-space-sm) var(--ej-space-md);
+  border: 1px solid var(--ej-error);
+  border-radius: var(--ej-radius);
+  color: var(--ej-error);
+  background: var(--ej-panel);
+  font-weight: 600;
+}
+
+a { color: var(--ej-primary); }

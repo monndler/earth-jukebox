@@ -3,7 +3,7 @@
  * The catalogue is the REAL tracks only (data/tracks.ts); the synthetic demo track is not shown in the UI.
  */
 import { useEffect, type ReactNode } from 'react';
-import './app.css';
+import './explorer.css';
 import { Explorer } from './components/Explorer';
 import { LiveRegions } from './components/LiveRegions';
 import { TrackLibrary } from './components/TrackLibrary';
