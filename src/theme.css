@@ -1,0 +1,77 @@
+/*
+ * Design tokens: DESIGN.md "Abyssal Sonics Light" (light theme, D9).
+ * P1–P8 overrides applied (UI_FUNCTION_MAP.md §0.4, D14).
+ * Components use these variables — never hardcode hex values.
+ *
+ * Font: Space Grotesk will be bundled via @font-face from public/fonts/
+ * when font files are supplied. Until then, system fallback is used.
+ * See docs/ASSUMPTIONS.md.
+ */
+
+:root {
+  /* — Surfaces — */
+  --ej-bg: #faf8ff;                      /* background / surface */
+  --ej-panel: #ffffff;                    /* surface-container-lowest */
+  --ej-surface-low: #f2f3ff;             /* surface-container-low */
+  --ej-surface: #eaedff;                 /* surface-container */
+  --ej-surface-high: #e2e7ff;            /* surface-container-high */
+
+  /* — Text — */
+  --ej-text: #131b2e;                    /* on-surface */
+  --ej-text-secondary: #3e494a;          /* on-surface-variant */
+
+  /* — Primary (P1: #006067 for buttons, 7.32:1 on white) — */
+  --ej-primary: #006067;
+  --ej-on-primary: #ffffff;
+  --ej-primary-hover: #004f54;           /* P2: 9.35:1 on white */
+
+  /* — Error / Stop (P3: error red with label + icon) — */
+  --ej-error: #ba1a1a;
+  --ej-on-error: #ffffff;
+  --ej-error-hover: #93000a;
+
+  /* — Outline (P6: control boundaries ≥ 3:1 on white) — */
+  --ej-outline: #6e797a;
+  --ej-outline-variant: #bdc9ca;
+
+  /* — Grid cell tints (P4: meaning by symbol shape + text, never tint alone) — */
+  --ej-tint-high-bg: #ffdbca;            /* tertiary-fixed, warm */
+  --ej-tint-high-fg: #763300;            /* on-tertiary-fixed-variant */
+  --ej-tint-low-bg: #b9eaff;            /* secondary-fixed, cool */
+  --ej-tint-low-fg: #004d62;            /* on-secondary-fixed-variant */
+  --ej-tint-mid-bg: #96f1fa;            /* primary-fixed */
+  --ej-tint-mid-fg: #004f54;            /* on-primary-fixed-variant */
+  --ej-tint-nodata-bg: #eaedff;         /* surface-container */
+  --ej-tint-nodata-fg: #6e797a;         /* outline */
+
+  /* — Focus ring (P8: 3 px primary, 2 px white offset) — */
+  --ej-focus-ring: 3px solid var(--ej-primary);
+  --ej-focus-offset: 2px;
+
+  /* — Font (P7: system fallback until Space Grotesk files are supplied) — */
+  --ej-font: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+
+  /* — Spacing (mobile-first, DESIGN.md spacing scale) — */
+  --ej-space-xs: 0.25rem;
+  --ej-space-sm: 0.5rem;
+  --ej-space-md: 1rem;
+  --ej-space-lg: 1.5rem;
+  --ej-space-xl: 2.5rem;
+
+  /* — Radius (DESIGN.md rounded scale) — */
+  --ej-radius-sm: 0.25rem;
+  --ej-radius: 0.5rem;
+  --ej-radius-lg: 1rem;
+}
+
+/*
+ * To add Space Grotesk: place .woff2 files in public/fonts/ and uncomment:
+ *
+ * @font-face {
+ *   font-family: 'Space Grotesk';
+ *   src: url('/fonts/SpaceGrotesk-Variable.woff2') format('woff2');
+ *   font-weight: 300 700;
+ *   font-display: swap;
+ * }
+ */
