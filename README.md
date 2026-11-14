@@ -37,8 +37,11 @@ The app never claims more than the picture supports. Each track has an About pag
 | Track | Source | Basis |
 |---|---|---|
 | **Ocean Symphony** | NASA SVS 3912, *Global Sea Surface Currents and Temperature* | Decoded from legend (0–32 °C), matched by hue |
+| **Air Quality: PM2.5** | NASA SVS 5151, *Particulate Matter (PM) 2.5* (GMAO, GEOS-CF) | Decoded from legend (logarithmic, 0.4–409.6 µg/m³), plain colour matching |
 
 Ocean Symphony has three frames (25 March 2007, 13 September 2007, 3 March 2008). The values are read from the **colour of a picture** of output from the ECCO2 ocean model (MIT/JPL), not from the model data itself. The brightness of the thin current lines is ignored, and areas with too few readable lines are silent. Details and the measurements behind these choices are in [`docs/ASSUMPTIONS.md`](docs/ASSUMPTIONS.md) (#16–#21).
+
+Air Quality: PM2.5 also has three frames (29 October, 5 November and 13 November 2026, with the dates printed on the frames). The colour scale is logarithmic, so the app speaks only low, middle and high, never a number, and its sound covers only the lower part of the scale (#31–#35).
 
 ## Run it
 

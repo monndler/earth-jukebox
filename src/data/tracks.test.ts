@@ -33,7 +33,7 @@ describe('real track data (public/tracks)', () => {
     }
   });
 
-  it('has a contiguous legend that covers the declared value range for decoded-legend tracks', () => {
+  it('has a contiguous legend that covers the declared value range (the range may be narrower) for decoded-legend tracks', () => {
     for (const t of tracks) {
       if (t.valueBasis !== 'decoded-legend') {
         expect(t.legend).toBeUndefined();
@@ -41,8 +41,10 @@ describe('real track data (public/tracks)', () => {
       }
       const legend = t.legend ?? [];
       expect(legend.length).toBeGreaterThan(1);
-      expect(legend[0]?.valueMin).toBe(t.valueRange.min);
-      expect(legend[legend.length - 1]?.valueMax).toBe(t.valueRange.max);
+      expect(legend[0]?.valueMin ?? Number.POSITIVE_INFINITY).toBeLessThanOrEqual(t.valueRange.min);
+      expect(legend[legend.length - 1]?.valueMax ?? Number.NEGATIVE_INFINITY).toBeGreaterThanOrEqual(
+        t.valueRange.max,
+      );
       for (let i = 1; i < legend.length; i += 1) {
         expect(legend[i]?.valueMin).toBe(legend[i - 1]?.valueMax);
       }

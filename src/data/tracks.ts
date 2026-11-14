@@ -6,11 +6,12 @@
  * Remove the synthetic import before submission.
  */
 import type { Track } from '../types/track';
+import { airQualityPm25Track } from './airQualityPm25';
 import { oceanSymphonyTrack } from './oceanSymphony';
 import { syntheticDemoTrack } from './syntheticDemoTrack';
 
 /** Real tracks (PROJECT_PLAN §10, AGENTS.md §11). */
-export const tracks: readonly Track[] = [oceanSymphonyTrack];
+export const tracks: readonly Track[] = [oceanSymphonyTrack, airQualityPm25Track];
 
 /**
  * All tracks including the dev-only synthetic demo (AGENTS.md §11.5).

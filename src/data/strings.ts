@@ -79,7 +79,7 @@ export const strings = {
     experienceIntro: 'Choose an experience and let ocean data become sound.',
     empty: 'Ocean experiences are being prepared.',
     cardKicker: 'FEATURED EXPERIENCE',
-    cardIndex: '{n} / OCEAN TRACK',
+    cardIndex: '{n} / TRACK',
     cardButton: 'Enter experience',
     aboutEyebrow: 'WHY OCEANECHO?',
     aboutHeadingA: 'Data has a voice.',
