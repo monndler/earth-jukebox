@@ -100,7 +100,7 @@ Target users include blind and low-vision people. The design follows these rules
 - The map grid is one element with a text alternative. Its cells are hidden from assistive technology and are never tab stops. The assistive-technology path is the sliders, direction buttons and jump buttons.
 - Section navigation uses plain buttons with `aria-current`, not an ARIA tab pattern.
 - Polite live region for status and cell text, and an alert region for errors. Cell announcements are debounced, so fast moves are not read out one by one.
-- Colour tokens come from [`DESIGN.md`](DESIGN.md), with the overrides in [`UI_FUNCTION_MAP.md`](UI_FUNCTION_MAP.md) §0.4. Text is at least 14 px, and cell meaning is carried by symbol shape, not colour.
+- Dark "abyssal" theme with calculated contrast (text at least 9:1 on panels, control outlines and focus ring at least 3:1; see `docs/ASSUMPTIONS.md` #36). The older light tokens in [`DESIGN.md`](DESIGN.md) are no longer used for colour. Text is at least 14 px, and cell meaning is carried by symbol shape, not colour. Decorative motion is switched off when the system asks for reduced motion.
 - **Stop all sound** is always visible and reachable.
 
 None of this has been checked with real assistive technology yet.
@@ -114,7 +114,7 @@ None of this has been checked with real assistive technology yet.
 | Keyboard, screen-reader, zoom and contrast checks | Not run |
 | Listening tests with blind and low-vision volunteers | Not run. Mapping values and thresholds are initial design choices. |
 | Track Library, loading, error and empty screens | Placeholder layout. The designs are not supplied yet. |
-| Space Grotesk font | Not bundled yet (system fallback). The font file and licence need approval. |
+| Fonts | Not bundled yet (system fallback). A font file and its licence need approval. |
 
 Open questions and every decision with its evidence are in [`docs/ASSUMPTIONS.md`](docs/ASSUMPTIONS.md). The latest phase summary is [`docs/PHASE4_REPORT.md`](docs/PHASE4_REPORT.md).
 

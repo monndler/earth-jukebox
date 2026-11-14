@@ -13,6 +13,8 @@ body {
   line-height: 1.5;
   color: var(--ej-text);
   background: var(--ej-bg);
+  min-height: 100vh;
+  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -39,7 +41,73 @@ button, input, select, textarea { font-family: inherit; }
   border: 0;
 }
 
+/* — Underwater atmosphere (decorative, behind everything) — */
+.ocean-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1; /* inside #root's stacking context: above the page colour, below all content */
+  pointer-events: none;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(14, 116, 144, 0.35) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 45% at 85% 20%, rgba(0, 229, 255, 0.08) 0%, transparent 65%),
+    radial-gradient(ellipse 70% 55% at 15% 80%, rgba(13, 148, 136, 0.12) 0%, transparent 70%),
+    linear-gradient(180deg, var(--ej-bg) 0%, #051827 48%, var(--ej-bg-deep) 100%);
+}
+.ocean-backdrop__caustics {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  width: 140vw;
+  height: 360px;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse 50% 40% at 50% 0%, rgba(186, 230, 253, 0.2) 0%, rgba(0, 229, 255, 0.06) 45%, transparent 75%);
+  filter: blur(22px);
+  animation: ej-caustic 11s ease-in-out infinite alternate;
+}
+.ocean-backdrop__beam {
+  position: absolute;
+  top: -15%;
+  height: 115vh;
+  width: 180px;
+  background: linear-gradient(180deg, rgba(186, 230, 253, 0.12) 0%, rgba(0, 229, 255, 0.04) 45%, transparent 85%);
+  filter: blur(18px);
+  transform-origin: top center;
+  animation: ej-beam 15s ease-in-out infinite alternate;
+}
+.ocean-backdrop__beam--a { left: 20%; transform: rotate(-14deg); }
+.ocean-backdrop__beam--b { left: 48%; width: 240px; transform: rotate(-2deg); animation-duration: 18s; animation-direction: alternate-reverse; }
+.ocean-backdrop__beam--c { right: 18%; transform: rotate(15deg); animation-duration: 13s; }
+.ocean-backdrop__bubble {
+  position: absolute;
+  bottom: -20px;
+  left: var(--x);
+  width: var(--size);
+  height: var(--size);
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(0, 229, 255, 0.85) 0%, rgba(0, 229, 255, 0) 70%);
+  opacity: 0;
+  animation: ej-rise var(--dur) linear var(--delay) infinite;
+}
+@keyframes ej-caustic {
+  from { opacity: 0.75; transform: translateX(-50%) scaleX(0.96); }
+  to { opacity: 1; transform: translateX(-50%) scaleX(1.04); }
+}
+@keyframes ej-beam {
+  from { opacity: 0.55; margin-left: -12px; }
+  to { opacity: 0.85; margin-left: 18px; }
+}
+@keyframes ej-rise {
+  0% { transform: translateY(0) scale(0.7); opacity: 0; }
+  15% { opacity: 0.7; }
+  85% { opacity: 0.55; }
+  100% { transform: translateY(-105vh) translateX(24px) scale(1.1); opacity: 0; }
+}
+/* Everything that carries content sits above the backdrop. */
+#root { position: relative; z-index: 1; }
+
 @media (prefers-reduced-motion: reduce) {
+  .ocean-backdrop__bubble { display: none; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;

@@ -1,5 +1,5 @@
 /*
- * Explorer styles. Every colour, radius and spacing value comes from the tokens in theme.css (DESIGN.md + P1–P8).
+ * Explorer styles. Every colour, radius and spacing value comes from the tokens in theme.css (abyssal dark theme + P1–P8).
  * Text is at least 14 px (P5). Control boundaries use --ej-outline (P6). Cell meaning is carried by symbols (P4).
  */
 
@@ -19,12 +19,20 @@
 
 .ej-panel {
   background: var(--ej-panel);
-  border: 1px solid var(--ej-outline-variant);
+  background: var(--ej-glass);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--ej-glass-border);
   border-radius: var(--ej-radius-lg);
+  box-shadow: var(--ej-glass-shadow);
   padding: var(--ej-space-md);
   display: flex;
   flex-direction: column;
   gap: var(--ej-space-sm);
+}
+/* Without backdrop blur the translucent glass would let the animated backdrop show through the text. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .ej-panel, .ej-bar { background: var(--ej-panel); }
 }
 main { display: flex; flex-direction: column; gap: var(--ej-space-md); }
 .ej-explore { display: flex; flex-direction: column; gap: var(--ej-space-md); }
@@ -62,9 +70,10 @@ main { display: flex; flex-direction: column; gap: var(--ej-space-md); }
   line-height: 1.5rem;
   cursor: pointer;
 }
+.ej-btn { transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease; }
 .ej-btn:active { transform: scale(0.98); }
-.ej-btn--primary { background: var(--ej-primary); color: var(--ej-on-primary); }
-.ej-btn--primary:hover { background: var(--ej-primary-hover); }
+.ej-btn--primary { background: var(--ej-primary); color: var(--ej-on-primary); box-shadow: var(--ej-glow); }
+.ej-btn--primary:hover { background: var(--ej-primary-hover); transform: translateY(-1px); }
 .ej-btn--primary[aria-pressed='true'] { background: var(--ej-primary-hover); }
 .ej-btn--secondary { background: var(--ej-surface-low); color: var(--ej-text); border-color: var(--ej-outline); }
 .ej-btn--secondary:hover { background: var(--ej-surface); }
@@ -181,7 +190,10 @@ input[type='range'] { width: 100%; min-height: 2.75rem; accent-color: var(--ej-p
   gap: var(--ej-space-sm);
   padding: var(--ej-space-sm) var(--ej-space-md);
   background: var(--ej-panel);
-  border-top: 1px solid var(--ej-outline);
+  background: var(--ej-glass);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border-top: 1px solid var(--ej-glass-border);
 }
 .ej-bar .ej-btn { flex: 1 1 10rem; }
 .ej-bar--sticky { position: fixed; left: 0; right: 0; bottom: 0; z-index: 10; }

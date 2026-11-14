@@ -1,77 +1,88 @@
 /*
- * Design tokens: DESIGN.md "Abyssal Sonics Light" (light theme, D9).
- * P1–P8 overrides applied (UI_FUNCTION_MAP.md §0.4, D14).
+ * Design tokens: "Abyssal" dark theme (team decision, 14 Nov 2026; docs/ASSUMPTIONS.md #36).
+ * The look (abyss palette, glass panels, bioluminescent cyan accent) comes from the team's design prototype;
+ * the contrast values below were calculated, not assumed. P1–P8 (UI_FUNCTION_MAP.md §0.4) still apply:
+ *   text ≥ 7:1 on panels, control boundaries and focus ring ≥ 3:1, meaning never carried by colour alone.
  * Components use these variables — never hardcode hex values.
  *
- * Font: Space Grotesk will be bundled via @font-face from public/fonts/
- * when font files are supplied. Until then, system fallback is used.
- * See docs/ASSUMPTIONS.md.
+ * Font: the prototype used Plus Jakarta Sans. Font files cannot be fetched at run time (no requests to other
+ * sites), so the system fonts are used until .woff2 files are added to public/fonts/ (see the end of this file).
  */
 
 :root {
+  color-scheme: dark;
+
   /* — Surfaces — */
-  --ej-bg: #faf8ff;                      /* background / surface */
-  --ej-panel: #ffffff;                    /* surface-container-lowest */
-  --ej-surface-low: #f2f3ff;             /* surface-container-low */
-  --ej-surface: #eaedff;                 /* surface-container */
-  --ej-surface-high: #e2e7ff;            /* surface-container-high */
+  --ej-bg: #03111c;                      /* abyss */
+  --ej-bg-deep: #071e30;                 /* bottom of the page gradient */
+  --ej-panel: #092539;                   /* solid fallback of the glass panel (text on it ≥ 14:1) */
+  --ej-surface-low: #0c2d45;             /* raised control background */
+  --ej-surface: #0f3350;                 /* control hover / selected background */
+  --ej-surface-high: #14405f;
+
+  /* — Glass (decorative; the text contrast above is calculated against the solid panel colour) — */
+  --ej-glass: rgba(8, 32, 50, 0.72);
+  --ej-glass-border: rgba(34, 211, 238, 0.22);
+  --ej-glass-shadow: 0 12px 36px -8px rgba(1, 10, 19, 0.65), inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+  --ej-glow: 0 8px 26px -6px rgba(0, 229, 255, 0.35);
 
   /* — Text — */
-  --ej-text: #131b2e;                    /* on-surface */
-  --ej-text-secondary: #3e494a;          /* on-surface-variant */
+  --ej-text: #f1f7fb;                    /* 14.6:1 on panel */
+  --ej-text-secondary: #b9cddb;          /* 9.6:1 on panel */
 
-  /* — Primary (P1: #006067 for buttons, 7.32:1 on white) — */
-  --ej-primary: #006067;
-  --ej-on-primary: #ffffff;
-  --ej-primary-hover: #004f54;           /* P2: 9.35:1 on white */
+  /* — Primary: bioluminescent cyan with dark label text (11.4:1) — */
+  --ej-primary: #4fd8f0;
+  --ej-on-primary: #021019;
+  --ej-primary-hover: #8be9fb;
 
-  /* — Error / Stop (P3: error red with label + icon) — */
-  --ej-error: #ba1a1a;
-  --ej-on-error: #ffffff;
-  --ej-error-hover: #93000a;
+  /* — Error / Stop (P3): light red with dark label text (7.4:1); also readable as text on panels (6.2:1) — */
+  --ej-error: #ff7b72;
+  --ej-on-error: #2a0505;
+  --ej-error-hover: #ffa59f;
 
-  /* — Outline (P6: control boundaries ≥ 3:1 on white) — */
-  --ej-outline: #6e797a;
-  --ej-outline-variant: #bdc9ca;
+  /* — Outline (P6: control boundaries ≥ 3:1 on panel and page) — */
+  --ej-outline: #5f8ea8;
+  --ej-outline-variant: #1f4a63;
 
   /* — Grid cell tints (P4: meaning by symbol shape + text, never tint alone) — */
-  --ej-tint-high-bg: #ffdbca;            /* tertiary-fixed, warm */
-  --ej-tint-high-fg: #763300;            /* on-tertiary-fixed-variant */
-  --ej-tint-low-bg: #b9eaff;            /* secondary-fixed, cool */
-  --ej-tint-low-fg: #004d62;            /* on-secondary-fixed-variant */
-  --ej-tint-mid-bg: #96f1fa;            /* primary-fixed */
-  --ej-tint-mid-fg: #004f54;            /* on-primary-fixed-variant */
-  --ej-tint-nodata-bg: #eaedff;         /* surface-container */
-  --ej-tint-nodata-fg: #6e797a;         /* outline */
+  --ej-tint-high-bg: #7a3b12;            /* warm */
+  --ej-tint-high-fg: #ffe2cf;
+  --ej-tint-low-bg: #0d3b57;             /* cool */
+  --ej-tint-low-fg: #bdeaff;
+  --ej-tint-mid-bg: #0f5a63;             /* teal */
+  --ej-tint-mid-fg: #b8f6ff;
+  --ej-tint-nodata-bg: #0b1a26;
+  --ej-tint-nodata-fg: #8aa5b6;
 
-  /* — Focus ring (P8: 3 px primary, 2 px white offset) — */
-  --ej-focus-ring: 3px solid var(--ej-primary);
+  /* — Focus ring (P8): bright cyan, 12:1 on panel — */
+  --ej-focus-ring: 3px solid #7df3ff;
   --ej-focus-offset: 2px;
 
-  /* — Font (P7: system fallback until Space Grotesk files are supplied) — */
-  --ej-font: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', Roboto,
+  /* — Font (system fallback until font files are supplied) — */
+  --ej-font: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto,
     'Helvetica Neue', Arial, sans-serif;
 
-  /* — Spacing (mobile-first, DESIGN.md spacing scale) — */
+  /* — Spacing (mobile-first) — */
   --ej-space-xs: 0.25rem;
   --ej-space-sm: 0.5rem;
   --ej-space-md: 1rem;
   --ej-space-lg: 1.5rem;
   --ej-space-xl: 2.5rem;
 
-  /* — Radius (DESIGN.md rounded scale) — */
+  /* — Radius — */
   --ej-radius-sm: 0.25rem;
-  --ej-radius: 0.5rem;
-  --ej-radius-lg: 1rem;
+  --ej-radius: 0.75rem;
+  --ej-radius-lg: 1.25rem;
 }
 
 /*
- * To add Space Grotesk: place .woff2 files in public/fonts/ and uncomment:
+ * To add Plus Jakarta Sans (SIL Open Font License): download the .woff2 file from Google Fonts,
+ * place it in public/fonts/ and uncomment:
  *
  * @font-face {
- *   font-family: 'Space Grotesk';
- *   src: url('/fonts/SpaceGrotesk-Variable.woff2') format('woff2');
- *   font-weight: 300 700;
+ *   font-family: 'Plus Jakarta Sans';
+ *   src: url('/fonts/PlusJakartaSans-Variable.woff2') format('woff2');
+ *   font-weight: 400 800;
  *   font-display: swap;
  * }
  */
