@@ -136,4 +136,6 @@ NASA does not endorse this project or any non-U.S. Government entity, and is not
 
 ## Licence
 
-Not yet chosen.
+The source code of this project is released under the [MIT License](LICENSE).
+
+The MIT License covers the code only. The NASA frames in `public/` are NASA visualizations and are not covered by it: they stay under NASA's own usage terms (see Data and credits above), with the credit shown for each track.

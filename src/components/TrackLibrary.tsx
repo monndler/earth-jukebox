@@ -120,7 +120,7 @@ export function TrackLibrary(props: {
                   </div>
                 </div>
                 <div className="lp-card__body">
-                  <p className="lp-eyebrow">{t.cardKicker}</p>
+                  <p className="lp-eyebrow">{track.experimental === true ? t.cardKickerExperimental : t.cardKicker}</p>
                   <h3>{track.title}</h3>
                   <p className="lp-muted">{track.summary}</p>
                   <p className="lp-meta">

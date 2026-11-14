@@ -81,6 +81,7 @@ export const strings = {
     experienceIntro: 'Each track is a NASA visualization with its source, dates and limits stated.',
     empty: 'Tracks are being prepared.',
     cardKicker: 'NASA TRACK',
+    cardKickerExperimental: 'EXPERIMENTAL TRACK',
     cardIndex: '{n} / TRACK',
     cardMeta: '{frames} dated frames · {cols} × {rows} map cells',
     cardButton: 'Enter experience',

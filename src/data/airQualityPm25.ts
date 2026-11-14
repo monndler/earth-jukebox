@@ -74,19 +74,21 @@ export const airQualityPm25Track: Track = {
   ],
   legend: PM25_LEGEND,
   diverging: false,
-  // The sound covers only the lower 4 of the colour scale's 10 doubling steps (0.4 to 6.4 µg/m³), because the
+  // The sound covers only the lower 3 of the colour scale's 10 doubling steps (0.4 to 3.2 µg/m³), because the
   // average of a whole cell is mostly pale; darker colours all sound as the highest level (ASSUMPTIONS #33).
-  valueRange: { min: 0, max: 4 },
+  // Narrowed from 0–4 so the sweep repeats fewer notes (see scripts/audio-audit.ts). Still to be confirmed by ear.
+  valueRange: { min: 0, max: 3 },
   valueBasis: 'decoded-legend',
+  experimental: true,
   profileId: 'sweep-lr-3band',
   whyNotes:
     'Pitch rises with the colour scale (each step up on the scale means double the concentration), on a pentatonic scale so the sound stays musical. Three voices play the upper, middle and lower parts of the map. Silence means no readable colour. These are design choices to be tuned with listeners, not scientific facts.',
   exploreGrid: { cols: 10, rows: 8 },
   extremeLabels: { max: 'highest', min: 'lowest' },
   guideText: {
-    low: 'Low tones: area averages below about 1 microgram per cubic metre, the palest colours.',
-    middle: 'Middle tones: area averages from about 1 to about 2.5 micrograms per cubic metre.',
-    high: 'High tones: area averages above about 2.5 micrograms per cubic metre, up to the top of this track\'s sound range. Darker colours are not separated.',
+    low: 'Low tones: area averages below about 0.8 micrograms per cubic metre, the palest colours.',
+    middle: 'Middle tones: area averages from about 0.8 to about 1.6 micrograms per cubic metre.',
+    high: 'High tones: area averages above about 1.6 micrograms per cubic metre, up to the top of this track\'s sound range. Darker colours are not separated.',
     noData: 'Silence: the logo and date panels, or places where the map colours could not be read.',
   },
   aboutText: {
