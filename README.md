@@ -4,7 +4,7 @@
 > An accessibility-first web "jukebox" that turns NASA Earth visualization frames into sound, in the browser, in real time.
 > Built by team OceanEcho for the 2026 NASA Space Apps Challenge, *The Earth Information Jukebox* ("Earth Jukebox").
 
-**Status: work in progress.** The analysis and sound engine are tested. The Explorer interface is written but has not yet been run in a browser or tested with screen readers or blind and low-vision listeners. See [Status](#status) for exactly what is and is not verified.
+**Status: working prototype.** The app builds, passes its tests and is deployed. It has not yet been tested with screen readers or with blind and low-vision listeners, and the Air Quality track is **experimental** until it has been tested by ear. See [Status](#status) for exactly what is and is not verified.
 
 ## What it does
 
@@ -37,11 +37,11 @@ The app never claims more than the picture supports. Each track has an About pag
 | Track | Source | Basis |
 |---|---|---|
 | **Ocean Symphony** | NASA SVS 3912, *Global Sea Surface Currents and Temperature* | Decoded from legend (0–32 °C), matched by hue |
-| **Air Quality: PM2.5** | NASA SVS 5151, *Particulate Matter (PM) 2.5* (GMAO, GEOS-CF) | Decoded from legend (logarithmic, 0.4–409.6 µg/m³), plain colour matching |
+| **Air Quality: PM2.5** (experimental) | NASA SVS 5151, *Particulate Matter (PM) 2.5* (GMAO, GEOS-CF) | Decoded from legend (logarithmic, 0.4–409.6 µg/m³), plain colour matching |
 
-Ocean Symphony has three frames (25 March 2007, 13 September 2007, 3 March 2008). The values are read from the **colour of a picture** of output from the ECCO2 ocean model (MIT/JPL), not from the model data itself. The brightness of the thin current lines is ignored, and areas with too few readable lines are silent. Details and the measurements behind these choices are in [`docs/ASSUMPTIONS.md`](docs/ASSUMPTIONS.md) (#16–#21).
+Ocean Symphony is the main track and the original idea of the project. It has three frames (25 March 2007, 13 September 2007, 3 March 2008). The values are read from the **colour of a picture** of output from the ECCO2 ocean model (MIT/JPL), not from the model data itself. The brightness of the thin current lines is ignored, and areas with too few readable lines are silent. Details and the measurements behind these choices are in [`docs/ASSUMPTIONS.md`](docs/ASSUMPTIONS.md) (#16–#21).
 
-Air Quality: PM2.5 also has three frames (29 October, 5 November and 13 November 2026, with the dates printed on the frames). The colour scale is logarithmic, so the app speaks only low, middle and high, never a number, and its sound covers only the lower part of the scale (#31–#35).
+Air Quality: PM2.5 also has three frames (29 October, 5 November and 13 November 2026, with the dates printed on the frames). The colour scale is logarithmic, so the app speaks only low, middle and high, never a number, and its sound covers only the lower part of the scale (0.4 to 3.2 µg/m³). This track is marked **experimental** on its landing-page card: whether its sound clearly shows differences between places and dates still has to be confirmed by listening (#31–#35, #39).
 
 ## Run it
 
@@ -54,7 +54,10 @@ npm test           # run the unit tests (Vitest)
 npm run build      # typecheck and production build
 npm run lint       # ESLint
 npm run preview    # serve the production build
+npx tsx scripts/audio-audit.ts   # audio audit (see below)
 ```
+
+The audio audit reads each track's real frames, runs the app's own `core/` code and prints how the sound scores behave (distinct notes, repetition, differences between dates, how busy the sweeps are). **It is not a listening test:** it measures the notes, not how they feel. Use it again after changing any sound setting.
 
 Use **headphones and a low volume first.** Sound starts only when you press a sound button.
 
@@ -74,7 +77,8 @@ src/
   hooks/        Frame loading, audio engine, the Explorer controller
   components/   The interface
 public/tracks/  Frames used by tracks (converted and reduced from NASA originals)
-docs/           Decisions and reports
+scripts/        Audio audit script (not part of the app)
+docs/           Decisions and assumptions
 ```
 
 The key rule: **`core/` has no randomness, no time, and no browser access.** The same frame always produces the same sound. The pipeline is:
@@ -109,14 +113,15 @@ None of this has been checked with real assistive technology yet.
 
 | Area | State |
 |---|---|
-| Analysis, mapping, narration, audio engine, track data | Implemented. Unit tests pass in a temporary offline runner (107 tests). Run `npm test` to confirm. |
-| Explorer interface | Written. Typechecks with the real React types (`tsc -b` passed on the first Vercel build). **Not yet fully built, linted, or run in a browser.** |
-| Keyboard, screen-reader, zoom and contrast checks | Not run |
-| Listening tests with blind and low-vision volunteers | Not run. Mapping values and thresholds are initial design choices. |
-| Track Library, loading, error and empty screens | Placeholder layout. The designs are not supplied yet. |
+| Analysis, mapping, narration, audio engine, track data | Implemented. `npm test` passes (107 tests). |
+| Explorer interface | Implemented. `tsc -b`, `npm run lint` and `npm run build` pass, and the app is deployed on Vercel. |
+| Audio audit | Run on both tracks (`scripts/audio-audit.ts`). Pitch follows the data in both. PM2.5 is flatter than Ocean Symphony, so its sound range was narrowed to 0–3 and the track is marked experimental. See #39. |
+| Keyboard, screen-reader, zoom and contrast checks | Not run with real assistive technology. Contrast was calculated (#36). |
+| Listening tests (team, and blind and low-vision volunteers) | Not run yet. Mapping values and thresholds are initial design choices. |
+| Loading, error and empty screens | Placeholder layout. |
 | Fonts | Not bundled yet (system fallback). A font file and its licence need approval. |
 
-Open questions and every decision with its evidence are in [`docs/ASSUMPTIONS.md`](docs/ASSUMPTIONS.md). The latest phase summary is [`docs/PHASE4_REPORT.md`](docs/PHASE4_REPORT.md).
+Open questions and every decision with its evidence are in [`docs/ASSUMPTIONS.md`](docs/ASSUMPTIONS.md).
 
 ## Documents
 
@@ -130,7 +135,9 @@ Open questions and every decision with its evidence are in [`docs/ASSUMPTIONS.md
 
 ## Data and credits
 
-Ocean Symphony uses frames from **NASA Scientific Visualization Studio, *Global Sea Surface Currents and Temperature* (SVS 3912)**, <https://svs.gsfc.nasa.gov/3912/>. Credit: NASA/Goddard Space Flight Center Scientific Visualization Studio. The frames were converted from TIFF to PNG and reduced to 1024 × 512 for this project, and the dates come from the SVS date file for that frame set. Usage terms: see the [NASA media reproduction guidelines](https://www.nasa.gov/multimedia/guidelines/index.html). The licence terms for this project's use are still to be confirmed.
+Ocean Symphony uses frames from **NASA Scientific Visualization Studio, *Global Sea Surface Currents and Temperature* (SVS 3912)**, <https://svs.gsfc.nasa.gov/3912/>. Credit: NASA/Goddard Space Flight Center Scientific Visualization Studio. The frames were converted from TIFF to PNG and reduced to 1024 × 512 for this project, and the dates come from the SVS date file for that frame set. Usage terms: see the [NASA Images and Media Usage Guidelines](https://www.nasa.gov/nasa-brand-center/images-and-media/). This project uses the frames for non-commercial, educational and informational purposes, credits NASA as the source, and does not imply NASA endorsement.
+
+Air Quality: PM2.5 uses frames from **NASA Scientific Visualization Studio, *Particulate Matter (PM) 2.5* (SVS 5151)**, <https://svs.gsfc.nasa.gov/5151/>. Credit: NASA's Global Modeling and Assimilation Office (GMAO). The frames were reduced to 1024 × 512 for this project, and the dates are the ones printed on the frames. The frames show the NASA logo and a GMAO label as drawn by NASA; this project does not use them as its own branding.
 
 NASA does not endorse this project or any non-U.S. Government entity, and is not responsible for information contained on non-U.S. Government websites.
 
