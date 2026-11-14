@@ -92,6 +92,11 @@ export interface Track {
    */
   readonly valueRange: { readonly min: number; readonly max: number };
   readonly valueBasis: ValueBasis;
+  /**
+   * True for a track whose sound mapping has not yet been confirmed by listening tests. Shown to the user as an
+   * "Experimental" label. Optional: absent means a regular track.
+   */
+  readonly experimental?: boolean;
   readonly profileId: string;
   readonly whyNotes: string;
   /** Explore grid size (D1). Default 10 × 8. */
