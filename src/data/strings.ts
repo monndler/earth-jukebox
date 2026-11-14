@@ -24,7 +24,7 @@ export const strings = {
 
   /* ─── Phase 4: Global elements ─── */
   app: {
-    title: 'Earth Jukebox — Audio Map',
+    title: 'OceanEcho',
   },
   header: {
     announceOn: 'Sound on',
@@ -49,6 +49,45 @@ export const strings = {
   } as const,
   source: {
     line: '{dataset} — {date}',
+  },
+
+  /* ─── Landing page (Track Library view) ─── */
+  landing: {
+    navLabel: 'Main navigation',
+    brandLabel: 'OceanEcho home',
+    brandA: 'OCEAN',
+    brandB: 'ECHO',
+    navAbout: 'About',
+    navExplore: 'Explore',
+    navAccessibility: 'Accessibility',
+    navCta: 'Listen now',
+    eyebrow: 'OCEAN SONIFICATION EXPERIENCE',
+    heroLine1: 'Listen to the Ocean.',
+    heroLine2: "Discover Earth's",
+    heroLine3: 'Changing Voice.',
+    heroDescription:
+      'What if you could hear our oceans changing? Explore ocean science through sound, turning data into a listening experience for everyone.',
+    heroPrimary: 'Explore the ocean',
+    heroSecondary: 'Discover the project',
+    noteLine1: 'NASA-inspired ocean data',
+    noteLine2: 'Science you can hear',
+    artLabel: 'Abstract glowing blue planet surrounded by ocean sound waves',
+    artTop: 'OCEAN DATA / SOUND',
+    artBottom: 'A PLANET IN MOTION',
+    experienceEyebrow: 'THE LISTENING EXPERIENCE',
+    experienceHeading: 'Explore the ocean in a new way.',
+    experienceIntro: 'Choose an experience and let ocean data become sound.',
+    empty: 'Ocean experiences are being prepared.',
+    cardKicker: 'FEATURED EXPERIENCE',
+    cardIndex: '{n} / OCEAN TRACK',
+    cardButton: 'Enter experience',
+    aboutEyebrow: 'WHY OCEANECHO?',
+    aboutHeadingA: 'Data has a voice.',
+    aboutHeadingB: "Let's listen.",
+    aboutText:
+      'OceanEcho transforms ocean information into sound, creating another way to understand our changing planet. Designed to make scientific exploration more engaging and accessible, including for people who are blind or have low vision.',
+    footerTagline: "Listen to the Ocean. Discover Earth's Changing Voice.",
+    footerCredit: 'OceanEcho · NASA Space Apps Challenge · Earth Jukebox',
   },
 
   /* ─── Frame choice (PLACEHOLDER-LAYOUT: not in the supplied design) ─── */

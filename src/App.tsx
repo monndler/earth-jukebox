@@ -41,7 +41,7 @@ function Shell(): ReactNode {
 
 export default function App(): ReactNode {
   return (
-    <AppProvider defaultTrackId={tracks[0]?.id ?? ''}>
+    <AppProvider defaultTrackId="">
       <Shell />
     </AppProvider>
   );

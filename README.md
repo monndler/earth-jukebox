@@ -1,8 +1,8 @@
-# Earth Jukebox: Audio Map
+# OceanEcho
 
-> **Hear the Earth. Understand our planet.**
+> **Listen to the Ocean. Discover Earth's Changing Voice.**
 > An accessibility-first web "jukebox" that turns NASA Earth visualization frames into sound, in the browser, in real time.
-> Built for the 2026 NASA Space Apps Challenge, *The Earth Information Jukebox*.
+> Built by team OceanEcho for the 2026 NASA Space Apps Challenge, *The Earth Information Jukebox* ("Earth Jukebox").
 
 **Status: work in progress.** The analysis and sound engine are tested. The Explorer interface is written but has not yet been run in a browser or tested with screen readers or blind and low-vision listeners. See [Status](#status) for exactly what is and is not verified.
 
