@@ -12,7 +12,7 @@
   gap: var(--ej-space-xl);
 }
 .lp h1, .lp h2, .lp h3 { letter-spacing: -0.02em; }
-.lp em { font-style: normal; color: var(--ej-primary); text-shadow: 0 0 28px rgba(0, 229, 255, 0.4); }
+.lp em { font-style: normal; color: var(--ej-primary);  }
 .lp-muted { color: var(--ej-text-secondary); font-size: 1rem; line-height: 1.5rem; }
 .lp-eyebrow { font-size: 0.875rem; line-height: 1.25rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ej-primary); }
 .lp-meta { font-size: 0.875rem; line-height: 1.25rem; color: var(--ej-text-secondary); }
@@ -22,8 +22,7 @@
 .lp-glass {
   background: var(--ej-panel);
   background: var(--ej-glass);
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
+  backdrop-filter: none;
   border: 1px solid var(--ej-glass-border);
   border-radius: var(--ej-radius-lg);
   box-shadow: var(--ej-glass-shadow);
@@ -67,9 +66,8 @@
   gap: var(--ej-space-sm) var(--ej-space-md);
   margin: 0 calc(var(--ej-space-md) * -1);
   padding: var(--ej-space-sm) var(--ej-space-md);
-  background: rgba(3, 17, 28, 0.82);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
+  background: var(--ej-bg);
+  backdrop-filter: none;
   border-bottom: 1px solid var(--ej-glass-border);
 }
 .lp-brand { display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 800; letter-spacing: 0.08em; color: var(--ej-text); text-decoration: none; }
@@ -201,3 +199,55 @@
   .lp-hero { grid-template-columns: 1.1fr 0.9fr; }
   .lp-steps { grid-template-columns: repeat(4, 1fr); }
 }
+
+/* — Daylight overrides: flat, no glow, no motion decoration — */
+.lp-art__planet { background: var(--ej-surface-low); border: 1px solid var(--ej-outline); box-shadow: none; }
+.lp-art__ring { border-color: var(--ej-outline-variant); animation: none; }
+.lp-card:hover { transform: none; border-color: var(--ej-outline); }
+.lp-card__visual { background: var(--ej-surface-low); }
+.lp-wave i { background: var(--ej-primary); border-radius: 0; }
+
+/* — Jukebox hardware feel: brass trim, chunky keys that press down — */
+.ej-btn, .lp-btn { box-shadow: 0 2px 0 var(--ej-outline-variant); }
+.ej-btn:active, .lp-btn:active { transform: translateY(2px); box-shadow: none; }
+.ej-btn--primary, .lp-btn--primary { box-shadow: 0 2px 0 #0b2f47; }
+.lp-card { border-top: 4px solid #2f7d6d; }
+.lp-card__index { font-family: ui-monospace, 'IBM Plex Mono', Menlo, Consolas, monospace; font-variant-numeric: tabular-nums; }
+.lp-nav { border-bottom: 2px solid #2f7d6d; }
+
+/* — Hero disc: the real Ocean Symphony frame as a record platter (decorative, aria-hidden) — */
+.lp-art__planet {
+  position: relative;
+  width: 16rem;
+  background-color: #0b1620;
+  background-image: url('/tracks/ocean-symphony/frame-23000.png');
+  background-size: 230% auto;
+  background-position: 42% 50%;
+  border: 2px solid var(--ej-text);
+  box-shadow: 0 6px 18px rgba(22, 33, 29, 0.18);
+  overflow: hidden;
+}
+/* record grooves */
+.lp-art__planet::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: repeating-radial-gradient(circle at center, transparent 0 9px, rgba(255, 255, 255, 0.07) 9px 10px);
+}
+/* spindle hole */
+.lp-art__planet::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: var(--ej-bg);
+  border: 2px solid var(--ej-text);
+}
+.lp-art__ring { border-color: var(--ej-outline); opacity: 0.45; }
+.lp-art__ring--1 { width: 18rem; height: 18rem; }
+.lp-art__ring--2 { width: 21rem; height: 21rem; }
+.lp-art__ring--3 { width: 24rem; height: 24rem; }

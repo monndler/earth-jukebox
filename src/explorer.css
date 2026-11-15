@@ -20,8 +20,7 @@
 .ej-panel {
   background: var(--ej-panel);
   background: var(--ej-glass);
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
+  backdrop-filter: none;
   border: 1px solid var(--ej-glass-border);
   border-radius: var(--ej-radius-lg);
   box-shadow: var(--ej-glass-shadow);
@@ -50,7 +49,7 @@ main { display: flex; flex-direction: column; gap: var(--ej-space-md); }
   display: inline-block;
   align-self: flex-start;
   padding: var(--ej-space-xs) 0.625rem;
-  border-radius: 9999px;
+  border-radius: var(--ej-radius);
   border: 1px solid var(--ej-outline);
   background: var(--ej-surface-low);
   color: var(--ej-text);
@@ -155,13 +154,13 @@ input[type='range'] { width: 100%; min-height: 2.75rem; accent-color: var(--ej-p
   flex: none;
   width: 3.25rem;
   height: 2rem;
-  border-radius: 9999px;
+  border-radius: var(--ej-radius);
   border: 1.5px solid var(--ej-outline);
   background: var(--ej-panel);
   cursor: pointer;
   padding: 0;
 }
-.ej-switch__thumb { position: absolute; top: 0.2rem; left: 0.25rem; width: 1.35rem; height: 1.35rem; border-radius: 9999px; background: var(--ej-outline); transition: transform 0.15s; }
+.ej-switch__thumb { position: absolute; top: 0.2rem; left: 0.25rem; width: 1.35rem; height: 1.35rem; border-radius: var(--ej-radius); background: var(--ej-outline); transition: transform 0.15s; }
 .ej-switch[aria-checked='true'] { background: var(--ej-primary); border-color: var(--ej-primary); }
 .ej-switch[aria-checked='true'] .ej-switch__thumb { transform: translateX(1.2rem); background: var(--ej-on-primary); }
 
@@ -191,8 +190,7 @@ input[type='range'] { width: 100%; min-height: 2.75rem; accent-color: var(--ej-p
   padding: var(--ej-space-sm) var(--ej-space-md);
   background: var(--ej-panel);
   background: var(--ej-glass);
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
+  backdrop-filter: none;
   border-top: 1px solid var(--ej-glass-border);
 }
 .ej-bar .ej-btn { flex: 1 1 10rem; }
@@ -208,3 +206,8 @@ input[type='range'] { width: 100%; min-height: 2.75rem; accent-color: var(--ej-p
 }
 
 a { color: var(--ej-primary); }
+
+/* — Jukebox hardware feel: brass trim, chunky keys that press down — */
+.ej-btn, .lp-btn { box-shadow: 0 2px 0 var(--ej-outline-variant); }
+.ej-btn:active, .lp-btn:active { transform: translateY(2px); box-shadow: none; }
+.ej-btn--primary, .lp-btn--primary { box-shadow: 0 2px 0 #0b2f47; }

@@ -62,11 +62,11 @@ export const strings = {
     navHow: 'How it works',
     navCta: 'Listen now',
     eyebrow: 'NASA DATA, HEARD',
-    heroLine1: 'Listen to the Ocean.',
+    heroLine1: 'Listen to the Earth.',
     heroLine2: "Discover Earth's",
     heroLine3: 'Changing Voice.',
     heroDescription:
-      'What if you could hear our oceans changing? Explore NASA Earth science through sound, turning data into a listening experience for everyone.',
+      'What if you could hear our planet changing? Explore NASA Earth science through sound, turning data into a listening experience for everyone.',
     heroPrimary: 'Explore the tracks',
     heroSecondary: 'See how it works',
     artLabel: 'Abstract glowing blue planet surrounded by sound waves',
@@ -82,7 +82,7 @@ export const strings = {
     empty: 'Tracks are being prepared.',
     cardKicker: 'NASA TRACK',
     cardKickerExperimental: 'EXPERIMENTAL TRACK',
-    cardIndex: '{n} / TRACK',
+    cardIndex: 'E-{n} / TRACK',
     cardMeta: '{frames} dated frames · {cols} × {rows} map cells',
     cardButton: 'Enter experience',
     howEyebrow: 'HOW IT WORKS',
@@ -111,7 +111,7 @@ export const strings = {
     aboutHeadingB: "Let's listen.",
     aboutText:
       'OceanEcho transforms NASA Earth information into sound, creating another way to understand our changing planet. Designed to make scientific exploration more engaging and accessible, including for people who are blind or have low vision.',
-    footerTagline: "Listen to the Ocean. Discover Earth's Changing Voice.",
+    footerTagline: "Listen to the Earth. Discover Its Changing Voice.",
     footerCredit: 'OceanEcho · NASA Space Apps Challenge · Earth Jukebox',
   },
 

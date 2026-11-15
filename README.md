@@ -1,6 +1,6 @@
 # OceanEcho
 
-> **Listen to the Ocean. Discover Earth's Changing Voice.**
+> **Listen to the Earth. Discover Its Changing Voice.**
 > An accessibility-first web "jukebox" that turns NASA Earth visualization frames into sound, in the browser, in real time.
 > Built by team OceanEcho for the 2026 NASA Space Apps Challenge, *The Earth Information Jukebox* ("Earth Jukebox").
 
@@ -104,7 +104,7 @@ Target users include blind and low-vision people. The design follows these rules
 - The map grid is one element with a text alternative. Its cells are hidden from assistive technology and are never tab stops. The assistive-technology path is the sliders, direction buttons and jump buttons.
 - Section navigation uses plain buttons with `aria-current`, not an ARIA tab pattern.
 - Polite live region for status and cell text, and an alert region for errors. Cell announcements are debounced, so fast moves are not read out one by one.
-- Dark "abyssal" theme with calculated contrast (text at least 9:1 on panels, control outlines and focus ring at least 3:1; see `docs/ASSUMPTIONS.md` #36). The older light tokens in [`DESIGN.md`](DESIGN.md) are no longer used for colour. Text is at least 14 px, and cell meaning is carried by symbol shape, not colour. Decorative motion is switched off when the system asks for reduced motion.
+- Light "Earth" theme with calculated contrast (text at least 7:1 on panels, control outlines and focus ring at least 3:1; see `docs/ASSUMPTIONS.md` #36). No glow, blur or animated background. Text is at least 14 px, and cell meaning is carried by symbol shape, not colour. Decorative motion is switched off when the system asks for reduced motion.
 - **Stop all sound** is always visible and reachable.
 
 None of this has been checked with real assistive technology yet.

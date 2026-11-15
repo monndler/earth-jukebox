@@ -6,7 +6,6 @@ import { useEffect, type ReactNode } from 'react';
 import './explorer.css';
 import { Explorer } from './components/Explorer';
 import { LiveRegions } from './components/LiveRegions';
-import { OceanBackdrop } from './components/OceanBackdrop';
 import { TrackLibrary } from './components/TrackLibrary';
 import { tracks } from './data/tracks';
 import { saveSettings, useAppDispatch, useAppState } from './store';
@@ -25,7 +24,6 @@ function Shell(): ReactNode {
 
   return (
     <>
-      <OceanBackdrop />
       <LiveRegions
         announcement={state.announcement}
         announcementKey={state.announcementKey}

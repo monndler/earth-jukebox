@@ -1,78 +1,73 @@
 /*
- * Design tokens: "Abyssal" dark theme (team decision, 14 Nov 2026; docs/ASSUMPTIONS.md #36).
- * The look (abyss palette, glass panels, bioluminescent cyan accent) comes from the team's design prototype;
- * the contrast values below were calculated, not assumed. P1–P8 (UI_FUNCTION_MAP.md §0.4) still apply:
- *   text ≥ 7:1 on panels, control boundaries and focus ring ≥ 3:1, meaning never carried by colour alone.
- * Components use these variables — never hardcode hex values.
- *
- * Font: the prototype used Plus Jakarta Sans. Font files cannot be fetched at run time (no requests to other
- * sites), so the system fonts are used until .woff2 files are added to public/fonts/ (see the end of this file).
+ * Design tokens: "Earth" light theme (team decision, 15 Nov 2026; docs/ASSUMPTIONS.md #36).
+ * Earth palette: pale sage page, ocean-blue primary, leaf-green trim, deep forest ink, small radii, soft shadow, no glow or blur.
+ * Contrast was calculated: text >= 7:1 on panels, control boundaries and focus ring >= 3:1, meaning never carried
+ * by colour alone. Components use these variables, never hardcoded hex values.
  */
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
-  /* — Surfaces — */
-  --ej-bg: #03111c;                      /* abyss */
-  --ej-bg-deep: #071e30;                 /* bottom of the page gradient */
-  --ej-panel: #092539;                   /* solid fallback of the glass panel (text on it ≥ 14:1) */
-  --ej-surface-low: #0c2d45;             /* raised control background */
-  --ej-surface: #0f3350;                 /* control hover / selected background */
-  --ej-surface-high: #14405f;
+  /* — Surfaces: warm paper, white panels, hairline borders — */
+  --ej-bg: #f1f5ef;                      /* museum paper */
+  --ej-bg-deep: #f1f5ef;
+  --ej-panel: #fbfdfa;
+  --ej-surface-low: #e3ece4;            /* raised control background */
+  --ej-surface: #d6e3da;                 /* control hover / selected background */
+  --ej-surface-high: #c8d8cd;
 
-  /* — Glass (decorative; the text contrast above is calculated against the solid panel colour) — */
-  --ej-glass: rgba(8, 32, 50, 0.72);
-  --ej-glass-border: rgba(34, 211, 238, 0.22);
-  --ej-glass-shadow: 0 12px 36px -8px rgba(1, 10, 19, 0.65), inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
-  --ej-glow: 0 8px 26px -6px rgba(0, 229, 255, 0.35);
+  /* — Panels (kept as tokens so components need no change): flat, hairline, no shadow, no glow — */
+  --ej-glass: #fbfdfa;
+  --ej-glass-border: #c9d6cc;
+  --ej-glass-shadow: 0 4px 14px rgba(22, 33, 29, 0.08);
+  --ej-glow: none;
 
-  /* — Text — */
-  --ej-text: #f1f7fb;                    /* 14.6:1 on panel */
-  --ej-text-secondary: #b9cddb;          /* 9.6:1 on panel */
+  /* — Text (contrast calculated on the panel; see ASSUMPTIONS #36) — */
+  --ej-text: #16211d;
+  --ej-text-secondary: #3f4f48;
 
-  /* — Primary: bioluminescent cyan with dark label text (11.4:1) — */
-  --ej-primary: #4fd8f0;
-  --ej-on-primary: #021019;
-  --ej-primary-hover: #8be9fb;
+  /* — Primary: deep ocean blue with white label. — */
+  --ej-primary: #155079;
+  --ej-on-primary: #ffffff;
+  --ej-primary-hover: #0f3d5e;
 
-  /* — Error / Stop (P3): light red with dark label text (7.4:1); also readable as text on panels (6.2:1) — */
-  --ej-error: #ff7b72;
-  --ej-on-error: #2a0505;
-  --ej-error-hover: #ffa59f;
+  /* — Stop / error: carbon with white label (18:1), a hardware stop button — */
+  --ej-error: #1c2a30;
+  --ej-on-error: #ffffff;
+  --ej-error-hover: #33454d;
 
-  /* — Outline (P6: control boundaries ≥ 3:1 on panel and page) — */
-  --ej-outline: #5f8ea8;
-  --ej-outline-variant: #1f4a63;
+  /* — Outline (control boundaries >= 3:1 on panel and page) — */
+  --ej-outline: #6b8077;
+  --ej-outline-variant: #c9d6cc;
 
-  /* — Grid cell tints (P4: meaning by symbol shape + text, never tint alone) — */
-  --ej-tint-high-bg: #7a3b12;            /* warm */
-  --ej-tint-high-fg: #ffe2cf;
-  --ej-tint-low-bg: #0d3b57;             /* cool */
-  --ej-tint-low-fg: #bdeaff;
-  --ej-tint-mid-bg: #0f5a63;             /* teal */
-  --ej-tint-mid-fg: #b8f6ff;
-  --ej-tint-nodata-bg: #0b1a26;
-  --ej-tint-nodata-fg: #8aa5b6;
+  /* — Grid cell tints (meaning by symbol shape + text, never tint alone) — */
+  --ej-tint-high-bg: #f3e3c3;
+  --ej-tint-high-fg: #4f3508;
+  --ej-tint-low-bg: #d3e4f2;
+  --ej-tint-low-fg: #0f3f63;
+  --ej-tint-mid-bg: #d3ebdd;
+  --ej-tint-mid-fg: #144a3a;
+  --ej-tint-nodata-bg: #e3e7e2;
+  --ej-tint-nodata-fg: #33433c;
 
-  /* — Focus ring (P8): bright cyan, 12:1 on panel — */
-  --ej-focus-ring: 3px solid #7df3ff;
+  /* — Focus ring: ocean blue — */
+  --ej-focus-ring: 3px solid #155079;
   --ej-focus-offset: 2px;
 
-  /* — Font (system fallback until font files are supplied) — */
-  --ej-font: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, sans-serif;
+  /* — Font (system fallback; no requests to other sites) — */
+  --ej-font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 
-  /* — Spacing (mobile-first) — */
+  /* — Spacing — */
   --ej-space-xs: 0.25rem;
   --ej-space-sm: 0.5rem;
   --ej-space-md: 1rem;
   --ej-space-lg: 1.5rem;
   --ej-space-xl: 2.5rem;
 
-  /* — Radius — */
-  --ej-radius-sm: 0.25rem;
-  --ej-radius: 0.75rem;
-  --ej-radius-lg: 1.25rem;
+  /* — Radius: hardware corners — */
+  --ej-radius-sm: 2px;
+  --ej-radius: 4px;
+  --ej-radius-lg: 6px;
 }
 
 /*
