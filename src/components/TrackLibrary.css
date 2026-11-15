@@ -210,10 +210,10 @@
 /* — Jukebox hardware feel: brass trim, chunky keys that press down — */
 .ej-btn, .lp-btn { box-shadow: 0 2px 0 var(--ej-outline-variant); }
 .ej-btn:active, .lp-btn:active { transform: translateY(2px); box-shadow: none; }
-.ej-btn--primary, .lp-btn--primary { box-shadow: 0 2px 0 #0b2f47; }
-.lp-card { border-top: 4px solid #2f7d6d; }
+.ej-btn--primary, .lp-btn--primary { box-shadow: 0 2px 0 #06394f; }
+.lp-card { border-top: 4px solid #16c79a; }
 .lp-card__index { font-family: ui-monospace, 'IBM Plex Mono', Menlo, Consolas, monospace; font-variant-numeric: tabular-nums; }
-.lp-nav { border-bottom: 2px solid #2f7d6d; }
+.lp-nav { border-bottom: 2px solid #16c79a; }
 
 /* — Hero disc: the real Ocean Symphony frame as a record platter (decorative, aria-hidden) — */
 .lp-art__planet {

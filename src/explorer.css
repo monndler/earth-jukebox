@@ -210,4 +210,4 @@ a { color: var(--ej-primary); }
 /* — Jukebox hardware feel: brass trim, chunky keys that press down — */
 .ej-btn, .lp-btn { box-shadow: 0 2px 0 var(--ej-outline-variant); }
 .ej-btn:active, .lp-btn:active { transform: translateY(2px); box-shadow: none; }
-.ej-btn--primary, .lp-btn--primary { box-shadow: 0 2px 0 #0b2f47; }
+.ej-btn--primary, .lp-btn--primary { box-shadow: 0 2px 0 #06394f; }

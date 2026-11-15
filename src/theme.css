@@ -1,6 +1,6 @@
 /*
  * Design tokens: "Earth" light theme (team decision, 15 Nov 2026; docs/ASSUMPTIONS.md #36).
- * Earth palette: pale sage page, ocean-blue primary, leaf-green trim, deep forest ink, small radii, soft shadow, no glow or blur.
+ * Palette (Color Hunt f8f1f1 / 11698e / 19456b / 16c79a): soft white page, ocean blue, deep navy, aqua-green trim, small radii, soft shadow, no glow or blur.
  * Contrast was calculated: text >= 7:1 on panels, control boundaries and focus ring >= 3:1, meaning never carried
  * by colour alone. Components use these variables, never hardcoded hex values.
  */
@@ -8,76 +8,53 @@
 :root {
   color-scheme: light;
 
-  /* — Surfaces: warm paper, white panels, hairline borders — */
-  --ej-bg: #f1f5ef;                      /* museum paper */
-  --ej-bg-deep: #f1f5ef;
-  --ej-panel: #fbfdfa;
-  --ej-surface-low: #e3ece4;            /* raised control background */
-  --ej-surface: #d6e3da;                 /* control hover / selected background */
-  --ej-surface-high: #c8d8cd;
+  --ej-bg: #f8f1f1;
+  --ej-bg-deep: #f8f1f1;
+  --ej-panel: #fffbfb;
+  --ej-surface-low: #efe6e6;
+  --ej-surface: #e4d9d9;
+  --ej-surface-high: #d8cccc;
 
-  /* — Panels (kept as tokens so components need no change): flat, hairline, no shadow, no glow — */
-  --ej-glass: #fbfdfa;
-  --ej-glass-border: #c9d6cc;
-  --ej-glass-shadow: 0 4px 14px rgba(22, 33, 29, 0.08);
+  --ej-glass: #fffbfb;
+  --ej-glass-border: #dccfcf;
+  --ej-glass-shadow: 0 4px 14px rgba(15, 34, 51, 0.08);
   --ej-glow: none;
 
-  /* — Text (contrast calculated on the panel; see ASSUMPTIONS #36) — */
-  --ej-text: #16211d;
-  --ej-text-secondary: #3f4f48;
+  --ej-text: #0f2233;
+  --ej-text-secondary: #323e4c;
 
-  /* — Primary: deep ocean blue with white label. — */
-  --ej-primary: #155079;
+  --ej-primary: #0b5273;
   --ej-on-primary: #ffffff;
-  --ej-primary-hover: #0f3d5e;
+  --ej-primary-hover: #083d57;
 
-  /* — Stop / error: carbon with white label (18:1), a hardware stop button — */
-  --ej-error: #1c2a30;
+  --ej-error: #19456b;
   --ej-on-error: #ffffff;
-  --ej-error-hover: #33454d;
+  --ej-error-hover: #12344f;
 
-  /* — Outline (control boundaries >= 3:1 on panel and page) — */
-  --ej-outline: #6b8077;
-  --ej-outline-variant: #c9d6cc;
+  --ej-outline: #76808d;
+  --ej-outline-variant: #dccfcf;
 
-  /* — Grid cell tints (meaning by symbol shape + text, never tint alone) — */
-  --ej-tint-high-bg: #f3e3c3;
-  --ej-tint-high-fg: #4f3508;
-  --ej-tint-low-bg: #d3e4f2;
-  --ej-tint-low-fg: #0f3f63;
-  --ej-tint-mid-bg: #d3ebdd;
-  --ej-tint-mid-fg: #144a3a;
-  --ej-tint-nodata-bg: #e3e7e2;
-  --ej-tint-nodata-fg: #33433c;
+  --ej-tint-high-bg: #cdf1e4;
+  --ej-tint-high-fg: #0a4535;
+  --ej-tint-low-bg: #cfd9e6;
+  --ej-tint-low-fg: #133a5c;
+  --ej-tint-mid-bg: #d9e8f0;
+  --ej-tint-mid-fg: #0d4a66;
+  --ej-tint-nodata-bg: #efe6e6;
+  --ej-tint-nodata-fg: #323e4c;
 
-  /* — Focus ring: ocean blue — */
-  --ej-focus-ring: 3px solid #155079;
+  --ej-focus-ring: 3px solid #11698e;
   --ej-focus-offset: 2px;
 
-  /* — Font (system fallback; no requests to other sites) — */
   --ej-font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 
-  /* — Spacing — */
   --ej-space-xs: 0.25rem;
   --ej-space-sm: 0.5rem;
   --ej-space-md: 1rem;
   --ej-space-lg: 1.5rem;
   --ej-space-xl: 2.5rem;
 
-  /* — Radius: hardware corners — */
   --ej-radius-sm: 2px;
   --ej-radius: 4px;
   --ej-radius-lg: 6px;
 }
-
-/*
- * To add Plus Jakarta Sans (SIL Open Font License): download the .woff2 file from Google Fonts,
- * place it in public/fonts/ and uncomment:
- *
- * @font-face {
- *   font-family: 'Plus Jakarta Sans';
- *   src: url('/fonts/PlusJakartaSans-Variable.woff2') format('woff2');
- *   font-weight: 400 800;
- *   font-display: swap;
- * }
- */
