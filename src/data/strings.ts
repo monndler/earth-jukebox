@@ -18,6 +18,7 @@ export const strings = {
     empty: 'This frame has no data.',
     uniform: 'Values are similar across the whole map.',
     extremeLine: '{label} area is {where}.',
+    extremeMany: '{label} areas are {where}.',
     coverage: 'About {percent} percent of the map has no data.',
     where: { left: 'on the left side', middle: 'in the middle', right: 'on the right side' },
   },

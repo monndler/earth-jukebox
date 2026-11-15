@@ -58,6 +58,12 @@ describe('describeCell', () => {
 });
 
 describe('summarizeFrame', () => {
+  it('names every side that holds the highest value instead of picking one cell', () => {
+    const text = summarizeFrame(makeExploreGrid(3, 1, [3, 1, 3]), plainTrack);
+    expect(text).toContain('areas are on the left side and on the right side');
+    expect(text).toContain('area is in the middle');
+  });
+
   it('states where the highest and lowest cells are using only left / middle / right', () => {
     const grid = makeExploreGrid(6, 1, [0, 1, 1, 1, 1, 3]);
     const text = summarizeFrame(grid, plainTrack);

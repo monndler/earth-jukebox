@@ -75,9 +75,38 @@ function whereOf(col: number, cols: number): string {
   return strings.summary.where.middle;
 }
 
+/** Every side (left / middle / right) that holds a cell with exactly this value, in reading order. */
+function sidesWithValue(grid: ExploreGrid, value: number): string[] {
+  const found = new Set<string>();
+  grid.values.forEach((v, i) => {
+    if (!grid.noData[i] && v !== null && Math.abs(v - value) < 1e-9) {
+      found.add(whereOf((i % grid.cols) + 1, grid.cols));
+    }
+  });
+  const order = [strings.summary.where.left, strings.summary.where.middle, strings.summary.where.right];
+  return order.filter((w) => found.has(w));
+}
+
+function joinList(items: string[]): string {
+  if (items.length <= 1) {
+    return items.join('');
+  }
+  return `${items.slice(0, -1).join(', ')} and ${items[items.length - 1] ?? ''}`;
+}
+
+/** One sentence for an extreme: singular when all such cells share one side, plural when they span several. */
+function extremeSentence(label: string, grid: ExploreGrid, value: number): string {
+  const sides = sidesWithValue(grid, value);
+  if (sides.length > 1) {
+    return fill(strings.summary.extremeMany, { label: capitalise(label), where: joinList(sides) });
+  }
+  return fill(strings.summary.extremeLine, { label: capitalise(label), where: sides[0] ?? '' });
+}
+
 /**
  * summarizeFrame — overview text. Only states what the Explore grid supports: where the highest and lowest
- * cells are (left / middle / right) and how much of the map has no data.
+ * cells are (left / middle / right, every side that holds a cell with that value) and how much of the map has
+ * no data.
  */
 export function summarizeFrame(grid: ExploreGrid, track: Track): string {
   const maxCell = findExtremeCell(grid, 'max');
@@ -89,18 +118,8 @@ export function summarizeFrame(grid: ExploreGrid, track: Track): string {
   if (maxCell.value === minCell.value) {
     sentences.push(strings.summary.uniform);
   } else {
-    sentences.push(
-      fill(strings.summary.extremeLine, {
-        label: capitalise(track.extremeLabels.max),
-        where: whereOf(maxCell.col, grid.cols),
-      }),
-    );
-    sentences.push(
-      fill(strings.summary.extremeLine, {
-        label: capitalise(track.extremeLabels.min),
-        where: whereOf(minCell.col, grid.cols),
-      }),
-    );
+    sentences.push(extremeSentence(track.extremeLabels.max, grid, maxCell.value));
+    sentences.push(extremeSentence(track.extremeLabels.min, grid, minCell.value));
   }
   const noDataCount = grid.noData.filter((x) => x).length;
   if (noDataCount > 0) {
